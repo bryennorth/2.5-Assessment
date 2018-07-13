@@ -15,7 +15,7 @@ module.exports = {
     },
     after: browser => {
         browser.end()
-    }, //a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+    },
     'evenOdd Default Input': browser => {
         AutoAssess
             .waitForElementPresent('@evenOddInput', 5000)
@@ -64,9 +64,10 @@ module.exports = {
             .setValue('@palindromeInput', inputData.palindrome)
             .click('@palindromeButton')
             .expect.element('@palindromeResults').text.to.equal('Palindrome: true')
+        AutoAssess
             .clearValue('@palindromeInput')
             .setValue('@palindromeInput', ['1', '\uE003'])
-            .verify.containsText('@palindromeInput', 'Palindrome: true')
+            .verify.containsText('@palindromeResults', 'Palindrome: true')
     },
     'sum Default Input': browser => {
         AutoAssess
@@ -75,10 +76,12 @@ module.exports = {
             .setValue('@sumInput2', inputData.sum2)
             .click('@sumButton')
             .expect.element('@sumResults').text.to.equal('Sum: 3')
+        AutoAssess
             .clearValue('@sumInput1')
             .clearValue('@sumInput2')
             .setValue('@sumInput1', ['1', '\uE003'])
             .setValue('@sumInput2', ['1', '\uE003'])
-            .verify.containsText()
+            .click('@sumButton')
+            .verify.containsText('@sumResults', 'Sum: NaN')
     }
 }
